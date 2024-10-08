@@ -1,0 +1,74 @@
+<?php
+
+
+$options = ["Piedra", "Papel", "Tijera"];
+
+//jugadores eligen al azar
+$player1 = $options[rand(0,2)];
+$player2 = $options[rand(0,2)];
+
+//Determina quien es el ganador
+function determinarGanador ($player1,$player2){
+    if ($player1===$player2){
+        return "Empate!!";
+    }
+
+    if (($player1 === "Piedra" && $player2 === "Tijera") ||
+        ($player1 === "Papel" && $player2 === "Piedra") ||
+        ($player1 === "Tijera" && $player2 === "Papel")) {
+            return "Ha ganado el jugador 1";
+        } else {
+            return "Ha ganado el jugador 2";
+        }
+}
+
+//Determinar el resultado
+$resultado = determinarGanador($player1,$player2);
+?>
+
+<html>
+<head>
+<h1>¡Piedra, Papel, Tijera!</h1>
+    <p>Actualice la página para mostrar otra partida</p>
+    <table>
+    <tr>
+        <th>Jugador 1</th>
+        <th>Jugador 2</th>
+    </tr>
+    <tr>
+        <td style="font-size: 100px;">
+            <?php
+            switch($player1){
+                case "Piedra":
+                    echo "🤜";
+                    break;
+                case "Papel":
+                    echo "✋";
+                    break;
+                case "Tijera":
+                    echo "✌️";
+                    break;
+            }
+            ?>
+        </td>
+        <td style="font-size: 100px;">
+            <?php
+            switch($player2) {
+                case "Piedra":
+                    echo "🤛";
+                    break;
+                case "Papel":
+                    echo "✋";
+                    break;
+                case "Tijera":
+                    echo "✌️";
+                    break;
+            }
+            ?>
+        </td>
+    </tr>
+    </table>
+
+    <h2><?php echo $resultado; ?></h2>
+</body>
+</html>
