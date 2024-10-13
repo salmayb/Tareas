@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados</title>
+
+    <style>
+        .jugadorRojo {
+            width: 200px;
+            display: inline-block;
+            color:black;
+            text-align: center;
+            font-size: 30px;
+            margin: 10px;
+            background-color: red;
+        }
+        .jugadorAzul {
+            width: 200px;
+            display: inline-block;
+            color:black;
+            text-align: center;
+            font-size: 30px;
+            margin: 10px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CINCO DADOS</h1>
+    <p>Actualice la página para mostrar una nueva tirada</p>
+
+    <?php
+    //Función que tira los cinco dados
+    function tirarDados(){
+        $dados =[];
+        for ($i=0; $i<5; $i++){
+            $dados[] = rand(1,6);
+        }
+        return $dados;
+    }
+
+    //Función para darle forma al dado (UTF-8)
+    function mostrarDado($valor){
+        $caracter_dado = [
+           1 => "&#9856;",
+           2 => "&#9857;",
+           3 => "&#9858;",
+           4 => "&#9859;",
+           5 => "&#9860;",
+           6 => "&#9861;" 
+        ];
+        return $caracter_dado[$valor];
+    }
+
+    //Función calcula la puntuación total menos el valor más alto y más bajo
+    function calcularPuntos($dados){
+        sort($dados); //ordena de menor a mayor
+        array_shift($dados); //elimina el primer elemento (el más bajo)
+        array_pop($dados); //elimina el último elemento (el más alto)
+        return array_sum($dados); //suma los valores que quedan y devuelve el resultado
+    }
+
+    //Tiradas de los jugadores 1 y 2
+    $jugador1 = tirarDados();
+    $jugador2 = tirarDados();
+
+    //Calculas los puntos de los jugadores 
+    $puntos1 = calcularPuntos($jugador1);
+    $puntos2 = calcularPuntos($jugador2);
+
+    //Determinar el ganador
+    if ($puntos1 > $puntos2){
+        $resultado = " Ha ganado el Jugador 1";
+    } elseif ($puntos1 < $puntos2){
+        $resultado = " Ha ganado el Jugador 2";
+    } else {
+        $resultado = " Empate";
+    }
+    ?>
+
+
+
+    <h2>Jugador 1</h2>
+    <div class="jugadorRojo">
+        <p>
+            <?php
+            for ($i =0; $i < count($jugador1); $i++){
+                echo mostrarDado ($jugador1[$i]). " ";
+            }
+            ?>
+        </p>
+    </div>
+    <p><?php echo $puntos1; ?> puntos</p>
+
+<br>
+
+    <h2>Jugador 2</h2>
+    <div class="jugadorAzul">
+        <p>
+            <?php
+            for ($i =0; $i < count($jugador2); $i++){
+                echo mostrarDado ($jugador2[$i]). " ";
+            }
+            ?>
+        </p>
+    </div>
+    <p><?php echo $puntos2; ?> puntos</p>
+
+    <h3>Resultado:<?php echo $resultado;?></h3>
+    
+</body>
+</html>
